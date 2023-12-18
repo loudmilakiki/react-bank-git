@@ -1,0 +1,7 @@
+.status {
+    width: 393px;
+    height: 53px;
+    font-weight: bold;
+    color: black;
+    background-image: url("../../../public/img/Status-iphon.png");
+}

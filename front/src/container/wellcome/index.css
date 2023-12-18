@@ -27,13 +27,13 @@
     padding-top: 60px;
 }
 
-.wellcome-title {
+.title {
     color: white;
     font-size: 42px;
     font-weight: 600;
 }
 
-.wellcome-description {
+.description {
     color: white;
     font-size: 20px;
     font-style: normal;
@@ -55,6 +55,9 @@ gap: 12px;
 }
 
 .button-up {   
+     display: flex;
+    flex-direction: column;
+    width: 353px;
 border-radius: 12px;
 align-self: stretch;
 background-color: #775CE5;
@@ -64,16 +67,19 @@ text-decoration: none;
 }
 
 .button-in {
+    display: flex;
+    flex-direction: column;
+    width: 353px;
     border-radius: 12px;
-padding: 20px 140px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-align-self: stretch;
-border: 1px solid #775CE5;
-padding: 12px;
+    padding: 20px 140px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #775CE5;
+    padding: 12px;
+    text-decoration: none;
 }
 
-.indicator-up {
-    padding-top: 490px;
+.indicator {
+    padding-top: 50px;
 }

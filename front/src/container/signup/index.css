@@ -3,25 +3,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    border-radius: 24px 24px 32px 32px;
-   
-}
-
-.status-up {
-    width: 393px;
-    height: 53px;
-    color: black;
-    background-image: url("../../../public/img/Status-iphon.png");
-   
-}
-
-.img {
-    width: 100%;
-    padding-left: 20px;
-    padding-top: 8px;
-    display: flex;
-    justify-content: flex-start;
-   
+    border-radius: 24px 24px 32px 32px; 
 }
 
 .signup {
@@ -29,23 +11,6 @@
     flex-direction: column;
     align-items: center;
     padding-top: 60px;
-}
-
-.signup-title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #121212;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.signup-description {
-    color: #939199;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    padding: 16px;
 }
 
 .action {
@@ -57,11 +22,11 @@
 .input {
     display: flex;
     flex-direction: column;
+ 
     gap:8px
-    
 }
 
-.buttons {
+.buttons-up {
     /* display: flex;
     flex-direction: column;
     padding: 100px; */
@@ -84,17 +49,74 @@ gap: 12px;
     color: white
 }
 
-.indicator {
-    padding-top: 50px;
+/* .form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+} */
+
+.form__error {
+    color: red;
+    font-size: 14px;
+    display: none;
+
+    &--active {
+        display: block;
+    }
+}
+
+.alert {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+
+    &--success {
+        border-color: green;
+        color: green;
+    }
+
+    &--error {
+        border-color: red;
+        color: red;
+    }
+
+    &--progress {
+        border-color: blue;
+        color: blue;
+    }
+}
+
+
+
+.indicator-up {
+    padding-top: 120px;
+
 }
 
 .input-signup-email {
     width: 100%;
     height: 54px;
-    border: 1px solid black;
+    border: 1px solid #775CE5;
     border-radius: 12px;
     align-self: stretch;
     padding: 10px;
+}
+
+.input-signup-email::placeholder {
+    color: gray;
+}
+
+.input-signup-email:hover {
+    border-color: gray;
+}
+
+.input-signup-email:focus {
+    border-color: orange;
+}
+
+.input-signup-email--error {
+    border-color: red;
 }
 
 .pass{
@@ -102,19 +124,44 @@ gap: 12px;
     flex-direction: column;
     gap:8px
 }
+
+.account {
+   padding-left: 8px;
+   text-decoration: none;
+}
+
+.account-link {
+    text-decoration: none;
+    color: white;
+}
 .input-signup-password {
      width: 100%;
     height: 54px;
-    border: 1px solid black;
+    border: 1px solid #E9E8EB;
     border-radius: 12px;
     align-self: stretch;
     padding: 10px;
+   
+}
+ 
+.mismatch {
+    color: #F2883D;
+    display: none;
+
+    &--active {
+        display: block;
+    }
 }
 
 .error {
-    display: grid;
-  gap: 6px;
-    padding-top: 36px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 16px;
+
+}
+
+.danger {
     color: #F2883D;
-    image: url("../../../public/img/danger.png");
+    font-size: 14px;
 }

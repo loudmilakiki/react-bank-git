@@ -1,0 +1,161 @@
+  .content-balance {
+    width: 393px;
+    height: 201px;
+    border-radius: 24px 24px 32px 32px;
+    background-image: url("../../../public/img/background-small.png");
+  }
+
+  .group1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    width: 100%;
+    height: 28px;
+    gap: 8px;
+  }
+
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .descr-balance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+  }
+
+  .title-balance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .receive, .send {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #5b94e9;
+    border-radius: 100px;
+    border: 10px solid #fff;
+    font-weight: 700;
+    width: 72px;
+    height: 72px;
+    position: absolute;
+    padding: 12px;
+    top: 175px;
+    gap: 10px;
+  }
+
+  .receive {
+    left: 120px;
+  }
+
+  .send {
+    right: 120px;
+    display: flex;
+  }
+
+  .send-link {
+    text-decoration: none;
+  }
+
+  .receive__link, .send__link {
+       color: #1d1d1f;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    top: 245px;    color: #1d1d1f;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+   
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    top: 245px;
+  }
+
+  .send__link {
+    right: 124px;
+  }
+
+  .receive__link {
+    left: 118px;
+  }
+
+  .transactions {
+   display: flex;
+   flex-direction: column;
+   margin-top: 90px;
+   gap: 20px;
+  }
+
+  .transaction {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    width: 353px;
+   
+  }
+
+  .transaction-link {
+    text-decoration: none;
+  }
+
+  .logo {
+        align-items: center;
+    background: #f7f7f7;
+    border-radius: 100px;
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    width: 48px;
+  }
+
+  .info {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100px;
+    
+  }
+
+  .user {
+    font-size: 20px;
+    color: #1d1d1f;
+    font-weight: bold;
+  }
+
+  .detail {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    color: gray;
+  }
+
+  .count-recep {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+   color: black;
+  }
+
+  .count-send {
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: green;
+  }
+
+  .indicator-balance {
+    padding-top: 350px;
+  }
