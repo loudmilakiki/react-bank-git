@@ -27,19 +27,17 @@
 }
 
 .buttons-con {
-    /* display: flex;
-    flex-direction: column;
-    padding: 100px; */
     display: flex;
-width: 353px;
-padding-top: 84px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-gap: 12px;
+    padding-top: 84px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
 }
 
 .button-confirm {
+    width: 353px;
+    height: 54px;
     border-radius: 12px;
     padding: 20px 140px;
     gap: 10px;
@@ -47,6 +45,7 @@ gap: 12px;
     background-color: #775CE5;
     padding: 12px;
     color: white
+    
 }
 
 .input-confirm-code {
@@ -59,4 +58,8 @@ gap: 12px;
 
 .indicator-con {
     padding-top: 395px;
+}
+
+.error-message {
+    color: red;
 }

@@ -1,10 +1,10 @@
-.content-up {
+/* .content-up {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     border-radius: 24px 24px 32px 32px; 
-}
+} */
 
 .signup {
     display: flex;
@@ -13,40 +13,55 @@
     padding-top: 60px;
 }
 
-.action {
+.form {
     display: flex;
     flex-direction: column;
     gap: 12px
 }
 
-.input {
+.form__item {
     display: flex;
     flex-direction: column;
- 
     gap:8px
 }
 
 .buttons-up {
-    /* display: flex;
-    flex-direction: column;
-    padding: 100px; */
     display: flex;
-width: 353px;
-padding-top: 84px;
+
 flex-direction: column;
 justify-content: center;
 align-items: center;
 gap: 12px;
+
 }
 
 .button-signup {
-    border-radius: 12px;
-    padding: 20px 140px;
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 353px;
+height: 54px;
     gap: 10px;
     align-self: stretch;
-    background-color: #775CE5;
-    padding: 12px;
-    color: white
+  
+    color:  white;
+      background-color: #775CE5;
+    padding: 20px;
+     border-radius: 12px;
+}
+
+/* .button-signup {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #775CE5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+} */
+
+.button-signup:hover {
+  background-color: #2980b9;
 }
 
 /* .form {
@@ -59,6 +74,7 @@ gap: 12px;
     color: red;
     font-size: 14px;
     display: none;
+    padding-top: 14px;
 
     &--active {
         display: block;
@@ -130,10 +146,7 @@ gap: 12px;
    text-decoration: none;
 }
 
-.account-link {
-    text-decoration: none;
-    color: white;
-}
+
 .input-signup-password {
      width: 100%;
     height: 54px;

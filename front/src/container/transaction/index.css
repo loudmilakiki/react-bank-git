@@ -1,0 +1,47 @@
+.transaction-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.transaction-amount {
+  font-size: 38px;
+    font-weight: 500;
+    color: #24B277;
+    padding: 34px;
+}
+
+.transaction-content {
+    display: flex;
+    flex-direction: column;
+    width: 353px;
+    height: 138px;
+    gap: 20px;
+}
+
+.transaction-block {
+    display: flex;
+    flex-direction: column;
+        background-color: #fff;
+    border-radius: 12px;
+    /* margin-left: 20px;
+    margin-right: 20px; */
+    padding: 16px;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    padding-top: 30px;
+}
+
+.transaction-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 78px;
+    font-size: 14px;
+    gap: 30px;
+}
+
+.indicator-transaction {
+    padding-top: 480px;
+}

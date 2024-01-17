@@ -1,0 +1,54 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+        &::placeholder {
+            color: #1D1D1F;
+        }
+
+        color: black;
+        transition: border-color 0.3s;
+
+        &:hover {
+            border-color: gray;
+        }
+
+        &:focus {
+            border-color: #775CE5;
+        }
+
+        &--error {
+            border-color: red !important;
+        }
+
+        .field__input {
+            border-color: red;
+        }
+    }
+
+
+.field__label {
+        font-size: 14px;
+        color: black;
+    }
+
+.field__input {
+        border: 1px solid #E9E8EB;
+        padding: 16px;
+        border-radius: 10px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .field__error {
+  font-size: 14px;
+  align-self: flex-start;
+  margin-left: 20px;
+  color: red;
+}
+
+/* .form__error {
+    color: red;
+    font-size: 12px;
+} */

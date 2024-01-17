@@ -1,18 +1,29 @@
 import "./index.css";
 
-const Input = () => {
+export default function Component({
+  name = "",
+  label = "",
+  type = "text",
+  placeholder = "",
+  isValid,
+  errorMessage,
+}) {
   return (
-    <div class="field">
-      <label for="{{name}}" class="field__label"></label>
+    <div className="field">
+      <label form="{{name}}" className="field__label">
+        {label}
+      </label>
       <input
-        oninput="{{action}}(this.name, this.value)"
-        type="{{type}}"
-        class="field__input validation"
-        name="{{name}}"
-        placeholder="{{placeholder}}"
+        action="signupForm.change"
+        onChange={(e) => console.log(e.target.value)}
+        type={type}
+        className="field__input"
+        name={name}
+        placeholder={placeholder}
       />
+      <div className="form__error" style={{ color: "#F23152" }}>
+        {isValid ? "" : errorMessage}
+      </div>
     </div>
   );
-};
-
-export default Input;
+}

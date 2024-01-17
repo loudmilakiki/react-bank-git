@@ -1,8 +1,17 @@
 import "./index.css";
+import React, { useState, useEffect } from "react";
 import Page from "../../component/page";
 import { Link } from "react-router-dom";
 
 const BalancePage = () => {
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/transactions")
+      .then((response) => response.json())
+      .then((data) => setTransactions(data))
+      .catch((error) => console.error("Error fetching transactions:", error));
+  }, []);
   return (
     <Page>
       <div className="content-balance">
@@ -10,7 +19,7 @@ const BalancePage = () => {
         <div className="group1">
           <div className="filter">
             <Link to="./settings">
-              <img src="/img/filter.png" />
+              <img src="/img/filter.png" alt="Icon" />
             </Link>
           </div>
 
@@ -18,7 +27,7 @@ const BalancePage = () => {
 
           <div className="filter">
             <Link to="./notifications">
-              <img src="/img/bell-ringing.png" />
+              <img src="/img/bell-ringing.png" alt="Icon" />
             </Link>
           </div>
         </div>
@@ -26,35 +35,31 @@ const BalancePage = () => {
       </div>
 
       <div className="receive">
-        <Link to="receive">
-          <img src="/img/arrow-down-right.png" />
+        <Link to="./receive">
+          <img src="/img/arrow-down-right.png" alt="Icon" />
         </Link>
       </div>
 
       <div className="send">
-        <Link to="send">
-          <img src="/img/users.png" width="28" height="28" />
+        <Link to="./send">
+          <img src="/img/users.png" width="28" height="28" alt="Icon" />
         </Link>
       </div>
 
-      <p className="send__link">
-        <Link className="send-link" to="./send ">
-          Send
-        </Link>
-      </p>
+      <Link className="send__link" to="/balance/send ">
+        Send
+      </Link>
 
-      <p className="receive__link">
-        <Link className="send-link" to="./receive">
-          Receive
-        </Link>
-      </p>
+      <Link className="receive__link" to="/balance/receive">
+        Receive
+      </Link>
 
       <ul className="transactions">
         <li>
           <Link className="transaction-link" to="../balance/transaction">
             <div className="transaction">
               <div className="logo">
-                <img src="/img/Frame 17.png" />
+                <img src="/img/Frame 17.png" alt="Icon" />
               </div>
 
               <div className="info">
@@ -75,7 +80,7 @@ const BalancePage = () => {
           <Link className="transaction-link" to="../balance/transaction">
             <div className="transaction">
               <div className="logo">
-                <img src="/img/Frame 18.png" />
+                <img src="/img/Frame 18.png" alt="Icon" />
               </div>
 
               <div className="info">
@@ -96,7 +101,7 @@ const BalancePage = () => {
           <Link className="transaction-link" to="../balance/transaction">
             <div className="transaction">
               <div className="logo">
-                <img src="/img/Frame 19.png" />
+                <img src="/img/Frame 19.png" alt="Icon" />
               </div>
 
               <div className="info">
@@ -115,7 +120,7 @@ const BalancePage = () => {
         </li>
       </ul>
       <div className="indicator-balance">
-        <img src="/img/indicator.png" />
+        <img src="/img/indicator.png" alt="Indicator" />
       </div>
     </Page>
   );

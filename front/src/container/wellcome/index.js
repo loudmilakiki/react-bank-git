@@ -17,19 +17,19 @@ const WellcomePage = ({ title = "", description = "" }) => {
 
       <div className="buttons">
         <button>
-          <Link className="button-up" to="./signup">
+          <Link className="button-up" to="/signup">
             Sing up
           </Link>
         </button>
         <button>
-          <Link className="button-in" to="./signin">
+          <Link className="button-in" to="/signin">
             Sing in
           </Link>
         </button>
       </div>
 
       <div className="indicator">
-        <img src="/img/indicator.png" />
+        <img src="/img/indicator.png" alt="Indicator" />
       </div>
     </Page>
   );

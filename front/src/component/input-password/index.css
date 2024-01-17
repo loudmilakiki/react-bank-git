@@ -1,7 +1,8 @@
-
-
 .field--password {
 display: flex;
+padding-bottom: 20px;
+
+
 	.field__wrapper {
 		width: 100%;
     height: 54px;
@@ -9,8 +10,6 @@ display: flex;
     border-radius: 14px;
     border: 1px solid #E9E8EB;
 
-
-	
 
 	position: relative;
 
@@ -24,17 +23,20 @@ display: flex;
 		background-image: url('../../../public/img/password-hide.png');
 		background-size: cover;
 
-		&[show] {
-			background-image: url('../../../public/img/password-show.png');
-		}
+		
 
 		position: absolute;
-		right: 16px;
+		right: 16px; 
 		top: calc(50% - 10px);
 	}
+
+	.field__icon.show {
+			background-image: url('../../../public/img/password-show.png');
+		}
 }
       .field__input {
 		padding-right: calc(16px + 20px + 16px);
      padding-left: 12px;
 	}
 }
+

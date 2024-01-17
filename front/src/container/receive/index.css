@@ -1,0 +1,61 @@
+.receive__title {
+     color: black;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.receive__content, .payment__content {
+    display: flex;
+    flex-direction: column;
+    width: 353px;
+    padding-top: 20px;
+}
+
+.receive__subtitle, .payment__subtitle {
+    padding: 12px;
+    font-weight: bold;
+}
+
+.indicator-receive {
+    padding-top: 380px;
+}
+
+.receive-amount {
+    display: flex;
+    flex-direction: column;
+    width: 353px;
+    height: 54px;
+    border: 1px solid #E9E8EB;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+
+.payment-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: 36px;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.payment-pic {
+    background-color: #f7f7f7;
+    border-radius: 100px;
+    width: 48px;
+    height: 48px;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+     align-items: center;
+}
+
+.payment-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   
+}

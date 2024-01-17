@@ -25,6 +25,7 @@
     flex-direction: column;
     align-items: center;
     font-size: 16px;
+    color: #fff;
   }
 
   .title-balance {
@@ -32,35 +33,41 @@
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    font-size: 34px;
+    font-weight: 400;
+    color: #fff;
   }
 
+ 
+
   .receive, .send {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     background: #5b94e9;
     border-radius: 100px;
     border: 10px solid #fff;
     font-weight: 700;
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    padding: 12px;
-    top: 175px;
+    padding: 16px;
+    top: 164px;
     gap: 10px;
   }
 
   .receive {
-    left: 120px;
+    left: 110px;
   }
 
   .send {
-    right: 120px;
+    right: 110px;
     display: flex;
   }
 
   .send-link {
+
     text-decoration: none;
+left: 131px;
+
   }
 
   .receive__link, .send__link {
@@ -80,20 +87,25 @@
     position: absolute;
     text-align: center;
     text-decoration: none;
-    top: 245px;
+    top: 256px;
   }
 
   .send__link {
-    right: 124px;
+    right: 64px;
+   
+    padding-right: 68px;
   }
 
   .receive__link {
-    left: 118px;
+    left: 58px;
+
+    padding-left: 68px;
   }
 
   .transactions {
    display: flex;
    flex-direction: column;
+
    margin-top: 90px;
    gap: 20px;
   }
@@ -101,7 +113,7 @@
   .transaction {
     display: grid;
     gap: 12px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 48px repeat(2, 1fr);
     align-items: center;
     width: 353px;
    
@@ -157,5 +169,10 @@
   }
 
   .indicator-balance {
-    padding-top: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 320px;
+    padding-bottom: 10px;
+   
   }
