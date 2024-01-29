@@ -20,7 +20,6 @@ const RecoveryConfirmPage = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Отправить запрос на сервер для обновления пароля с использованием code и newPassword
     try {
       const response = await fetch("http://localhost:4000/api/balance", {
         method: "POST",
@@ -35,10 +34,8 @@ const RecoveryConfirmPage = () => {
       });
 
       if (response.ok) {
-        // Успешно обновили пароль, переходим на страницу /balance
         navigate("/balance");
       } else {
-        // Обработка ошибок при обновлении пароля
         const result = await response.json();
         setError(result.error);
       }

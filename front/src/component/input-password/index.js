@@ -26,7 +26,6 @@ const InputPassword = ({
   };
 
   const validatePassword = () => {
-    // Ваша логика валидации пароля
     if (inputValue.length < 8) {
       setError(errorMessage);
     } else {

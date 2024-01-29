@@ -2,7 +2,7 @@ import "./index.css";
 import React, { useState, useEffect } from "react";
 import Page from "../../component/page";
 import { Link, useLocation } from "react-router-dom";
-import Transaction from "../../component/Transaction/transaction";
+//import Transaction from "../../component/Transaction/transaction";
 
 const BalancePage = () => {
   const [transactions, setTransactions] = useState([]);

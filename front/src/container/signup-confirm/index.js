@@ -17,48 +17,6 @@ const SignupConfirmPage = () => {
   const confirmationCodeFromSignup =
     (location.state && location.state.confirmationCode) || "";
 
-  // const confirmAccount = async () => {
-  //   console.log("Attempting to confirm account...");
-  //   try {
-  //     const response = await fetch("http://localhost:4000/api/signup-confirm", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         email: userEmail,
-  //         password: userPassword,
-  //         confirmationCode,
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       const result = await response.json();
-  //       console.log("Updated user:", result.updatedUser);
-  //       console.log("Updated token:", result.updatedToken);
-
-  //       login({
-  //         type: "LOGIN",
-  //         payload: {
-  //           user: result.updatedUser,
-  //           token: result.updatedToken,
-  //         },
-  //       });
-  //       console.log("Navigating to /balance");
-  //       navigate("/balance");
-  //     } else {
-  //       const errorResult = await response.json();
-  //       console.error("Server error:", errorResult);
-  //       setErrorMessage(errorResult.error);
-  //       setIsValidCode(false);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error confirming account:", error);
-  //     setErrorMessage("Error confirming account");
-  //     setIsValidCode(false);
-  //   }
-  // };
-
   const confirmAccount = async () => {
     console.log("Attempting to confirm account...");
     console.log("Data to be sent:", {
@@ -85,15 +43,12 @@ const SignupConfirmPage = () => {
         if (result.message === "Подтверждение успешно") {
           console.log("Confirmation successful!");
 
-          // Переход на страницу баланса только при успешном подтверждении
           navigate("/balance");
 
-          // Проверяем, есть ли информация о пользователе
           if (result.updatedUser) {
             console.log("Updated user:", result.updatedUser);
             console.log("Updated token:", result.updatedToken);
 
-            // Обновление пользователя и токена в контексте аутентификации
             login({
               type: "LOGIN",
               payload: {
@@ -102,23 +57,19 @@ const SignupConfirmPage = () => {
               },
             });
           } else {
-            // Дополнительная логика, если нет информации о пользователе
             console.log("No updated user information received.");
           }
         } else {
-          // Обработка неуспешного подтверждения
           console.error("Server error:", result.message);
           setErrorMessage(result.message);
           setIsValidCode(false);
         }
       } else {
-        // Обработка ошибки на сервере
         console.error("Server error:", result.message);
         setErrorMessage(result.message);
         setIsValidCode(false);
       }
     } catch (error) {
-      // Обработка ошибки fetch
       console.error("Error confirming account:", error);
       setErrorMessage("Error confirming account");
       setIsValidCode(false);

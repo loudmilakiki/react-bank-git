@@ -47,7 +47,6 @@ const ReceivePage = () => {
 
   const handleReceive = async () => {
     try {
-      // Отправка запроса на сервер с информацией о пополнении баланса
       const response = await fetch("http://localhost:4000/api/receive", {
         method: "POST",
         headers: {

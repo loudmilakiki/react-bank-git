@@ -76,7 +76,7 @@ const SignupPage = ({ title, description }) => {
 
         if (response.ok) {
           console.log("User registered successfully");
-          navigate("/signup-confirm", { state: { confirmationCode } }); // Выполнение перехода на страницу signup-confirm
+          navigate("/signup-confirm", { state: { confirmationCode } });
         } else {
           try {
             const errorResponse = await response.json();

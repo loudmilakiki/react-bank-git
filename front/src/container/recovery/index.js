@@ -38,20 +38,17 @@ const RecoveryPage = () => {
     }
 
     if (userConfirmed) {
-      // После успешной отправки кода восстановления, переходите на страницу подтверждения
       navigate(`/recovery-confirm`);
     } else {
       console.log("User cancelled the operation");
     }
 
-    // Проверяем, что email не пустой
     // if (!email.trim()) {
     //   console.error("Email cannot be empty");
     //   return;
     // }
 
     try {
-      // Отправляем запрос на сервер для получения кода восстановления
       const response = await fetch(`http://localhost:4000/api/recovery`, {
         method: "POST",
         headers: {
@@ -61,7 +58,6 @@ const RecoveryPage = () => {
       });
 
       if (response.ok) {
-        // Если запрос успешен, перенаправляем пользователя на страницу подтверждения
         console.log("Code sent successfully");
 
         const userConfirmed = window.confirm(
@@ -69,7 +65,6 @@ const RecoveryPage = () => {
         );
 
         if (userConfirmed) {
-          // После успешной отправки кода восстановления, переходите на страницу подтверждения
           navigate(`/recovery-confirm`);
         } else {
           console.log("User cancelled the operation");

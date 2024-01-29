@@ -96,20 +96,19 @@ const SettingsPage = () => {
   const handleSaveEmail = () => {
     const newEmail = email;
 
-    // Предполагаем, что user - это объект с информацией о пользователе
     const updatedUser = { ...user, email: newEmail };
 
     authDispatch({
       type: "LOGIN",
       payload: { user: updatedUser, token: token },
     });
-    // Здесь вызывайте функцию для изменения почты и обновления контекста аутентификации
+    и;
     console.log("Saving email:", email);
   };
 
   useEffect(() => {
-    console.log("Saving email:", email); // Выводите значение email в useEffect
-  }, [email]); // Вызывать useEffect при изменении email
+    console.log("Saving email:", email);
+  }, [email]);
   return (
     <Page>
       <Status />

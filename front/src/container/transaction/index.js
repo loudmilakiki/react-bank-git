@@ -4,7 +4,7 @@ import Status from "../../component/status";
 import Back from "../../component/back-button";
 import "./index.css";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 const TransactionPage = () => {
   const { transactionId } = useParams();
@@ -12,7 +12,6 @@ const TransactionPage = () => {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    // Здійсніть запит на сервер для отримання інформації про конкретну транзакцію за допомогою transactionId
     const fetchTransactionData = async () => {
       try {
         const response = await fetch(
@@ -50,13 +49,13 @@ const TransactionPage = () => {
       <Status />
       <Back />
 
-      {transactionData ? (
+      {/* {transactionData ? (
         <div className="section">
           <h1 className="title-up">Transaction </h1>
         </div>
       ) : (
         <p>Loading...</p>
-      )}
+      )} */}
 
       {transactionData && (
         <div className="transaction-form">
