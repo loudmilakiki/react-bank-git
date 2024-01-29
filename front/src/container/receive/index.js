@@ -5,24 +5,44 @@ import Status from "../../component/status";
 import Back from "../../component/back-button";
 import Box from "../../component/box";
 import { useNavigate } from "react-router-dom";
+import Input from "../../component/input";
 
 const ReceivePage = () => {
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [transactions, setTransactions] = useState([]);
+  const [isValidAmount, setIsValidAmount] = useState(true);
   const navigate = useNavigate();
 
-  const handleAmountChange = (e) => {
-    setAmount(e.currentTarget.value);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const validateAmount = (amount) => {
+    const regex =
+      /^(?!$|\s)(?:(?!^0\.00$)^\d{1,6}(?:\.\d{1,2})?$|^(?!^0$)\d{1,6}$)/;
+
+    return regex.test(amount);
   };
 
-  // const handlePaymentMethodChange = (method) => {
-  //   setPaymentMethod(method);
-  // };
+  const handleAmountChange = (e) => {
+    const newAmount = e.currentTarget.value;
+    const isAmountValid = validateAmount(newAmount);
+
+    //setIsValidAmount(isAmountValid);
+
+    if (!isAmountValid) {
+      setErrorMessage("Помилка введених даних");
+      setSuccessMessage("");
+    }
+
+    setAmount(newAmount);
+    setAmount(e.currentTarget.value);
+  };
 
   const handlePaymentClick = (value, e) => {
     setPaymentMethod(value);
     handleReceive();
-    navigate("/balance");
+    navigate(`/balance/receive?amount=${amount}&paymentMethod=${value}`);
   };
 
   const handleReceive = async () => {
@@ -40,45 +60,29 @@ const ReceivePage = () => {
       });
 
       if (response.ok) {
-        // Ваш код для обработки успешного ответа
+        const responseData = await response.json();
+
+        const newTransaction = {
+          id: responseData.transactionId,
+          amount: responseData.amount,
+          paymentMethod: responseData.paymentMethod,
+        };
+
+        setTransactions((prevTransactions) => [
+          newTransaction,
+          ...prevTransactions,
+        ]);
+
+        localStorage.setItem("newTransaction", JSON.stringify(newTransaction));
+        navigate(`/balance?amount=${amount}&paymentMethod=${paymentMethod}`);
         console.log("Receive success!");
       } else {
-        // Ваш код для обработки ошибки
         console.error("Receive error:", response.status);
-        window.location.href = "/balance";
       }
     } catch (error) {
-      // Ваш код для обработки ошибок при запросе
       console.error("Error during JSON processing:", error);
     }
   };
-
-  // const handleReceive = async () => {
-  //   try {
-  //     // Отправка запроса на сервер с информацией о пополнении баланса
-  //     const response = await fetch("http://localhost:4000/api/receive", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         amount,
-  //         paymentMethod,
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       // Ваш код для обработки успешного ответа
-  //       console.log("Receive success!");
-  //     } else {
-  //       // Ваш код для обработки ошибки
-  //       console.error("Receive error:", response.status);
-  //     }
-  //   } catch (error) {
-  //     // Ваш код для обработки ошибок при запросе
-  //     console.error("Error during JSON processing:", error);
-  //   }
-  // };
 
   return (
     <Page>
@@ -87,14 +91,18 @@ const ReceivePage = () => {
       <h1 className="receive__title">Receive</h1>
       <div className="receive__content">
         <h2 className="receive__subtitle">Receive amount</h2>
-        <input
-          className="receive-amount"
-          placeholder="Amount"
-          label="amount"
-          type="number"
-          value={amount}
-          onChange={handleAmountChange}
-        />
+        <div className="input-icon">
+          <span className="icon">$</span>
+          <input
+            className="receive-amount"
+            placeholder=""
+            //label="amount"
+            type="number"
+            value={amount}
+            onChange={handleAmountChange}
+            isValid={isValidAmount}
+          />
+        </div>
       </div>
 
       <div className="payment__content">

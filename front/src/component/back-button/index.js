@@ -5,7 +5,7 @@ export default function Component() {
 
   return (
     <div onClick={handleClick} className="back-button">
-      <img src="/img/arrow-back.png" />
+      <img src="/img/arrow-back.png" alt="icon" />
     </div>
   );
 }

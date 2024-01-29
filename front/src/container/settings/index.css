@@ -1,0 +1,78 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 12px;
+    width: 353px;
+}
+
+.settings-change, .settings-pass {
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+    width: 100%;
+    padding: 4px;
+    font-weight: bold;
+}
+
+.settings__title { 
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    width: 353px;
+    gap: 12px;
+    padding-top: 12px;
+}
+
+.settings-email, .settings-oldpassword, .settings-password {
+    width: 353;
+    height: 54px;
+    border: 1px solid #E9E8EB;
+    border-radius: 12px;
+    align-self: stretch;
+    padding: 10px;
+}
+
+.button-save {
+    padding-top: 12px; 
+    padding: 26px;
+}
+
+.save-email {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 1px solid #775CE5;
+    width: 353px;
+     height: 46px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 24px;
+}
+
+.indicator-setting {
+    padding-top: 65px;
+}
+
+.button-logout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 353px;
+    height: 46px;
+    border: 1px solid #F23152;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.break {
+    text-decoration: none;
+    color: #F23152;
+}

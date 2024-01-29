@@ -21,7 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            index
+            path="/wellcome"
             element={
               //<AuthRoute>
               <WellcomePage />
@@ -110,14 +110,13 @@ function App() {
           />
           <Route
             path="/balance/:transactionId"
-            component={TransactionPage}
             element={
               //     <PrivateRoute>
               <TransactionPage />
               //     </PrivateRoute>
             }
           />
-          {/* <Route path="*" Component={Error} />  */}
+          <Route path="*" Component={Error} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

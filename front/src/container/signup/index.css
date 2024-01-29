@@ -177,4 +177,8 @@ height: 54px;
 .danger {
     color: #F2883D;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    width: 350px;
+
 }

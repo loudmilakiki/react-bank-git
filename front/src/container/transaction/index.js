@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Page from "../../component/page";
 import Status from "../../component/status";
 import Back from "../../component/back-button";
@@ -7,37 +8,80 @@ import { Link } from "react-router-dom";
 
 const TransactionPage = () => {
   const { transactionId } = useParams();
+  const [transactionData, setTransactionData] = useState(null);
+  const [balance, setBalance] = useState(0);
 
+  useEffect(() => {
+    // Здійсніть запит на сервер для отримання інформації про конкретну транзакцію за допомогою transactionId
+    const fetchTransactionData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/transaction/${transactionId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              date: "25 May",
+              address: "user123@mail.com",
+              type: "receive",
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const transactionData = await response.json();
+          setTransactionData(transactionData);
+
+          setBalance((prevBalance) => prevBalance + transactionData.amount);
+        } else {
+          console.error("Error fetching transaction data:", response.status);
+        }
+      } catch (error) {
+        console.error("Error during JSON processing:", error);
+      }
+    };
+
+    fetchTransactionData();
+  }, [transactionId]);
   return (
     <Page>
       <Status />
       <Back />
 
-      <div className="section">
-        <h1 className="title-up">Transaction </h1>
-      </div>
-      <div className="transaction-form">
-        <div className="transaction-amount">-$30.00</div>
+      {transactionData ? (
+        <div className="section">
+          <h1 className="title-up">Transaction </h1>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
 
-        <div className="transaction-content">
-          <div className="transaction-block">
-            <div className="transaction-box">
-              <div>Date</div>
-              <div>25 May, 15.20</div>
-            </div>
+      {transactionData && (
+        <div className="transaction-form">
+          <div className="transaction-amount">{`$${transactionData.amount}`}</div>
 
-            <div className="transaction-box">
-              <div>Address</div>
-              <div>user123@gmail.com</div>
-            </div>
+          <div className="transaction-content">
+            <div className="transaction-block">
+              <div className="transaction-box">
+                <div>Date</div>
+                <div>{transactionData.date}</div>
+              </div>
 
-            <div className="transaction-box">
-              <div>Type</div>
-              <div>Receive</div>
+              <div className="transaction-box">
+                <div>Address</div>
+                <div>{transactionData.address}</div>
+              </div>
+
+              <div className="transaction-box">
+                <div>Type</div>
+                <div>{transactionData.type}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="indicator-transaction">
         <img src="/img/indicator.png" alt="Indicator" />

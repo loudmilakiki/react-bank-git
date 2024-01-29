@@ -1,17 +1,49 @@
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import Page from "../../component/page";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Transaction from "../../component/Transaction/transaction";
 
 const BalancePage = () => {
   const [transactions, setTransactions] = useState([]);
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+
+  const amount = queryParams.get("amount");
+  const paymentMethod = queryParams.get("paymentMethod");
+
+  const fetchTransactions = async () => {
+    try {
+      if (paymentMethod !== null) {
+        const response = await fetch(
+          `http://localhost:4000/api/transaction?paymentMethod=${paymentMethod}`
+        );
+
+        if (response.ok) {
+          const transactionsData = await response.json();
+          setTransactions(transactionsData);
+        } else {
+          console.error("Error fetching transactions:", response.status);
+        }
+      }
+    } catch (error) {
+      console.error("Error during JSON processing:", error);
+    }
+  };
 
   useEffect(() => {
-    fetch("/api/transactions")
-      .then((response) => response.json())
-      .then((data) => setTransactions(data))
-      .catch((error) => console.error("Error fetching transactions:", error));
+    fetchTransactions();
+
+    const newTransaction = JSON.parse(localStorage.getItem("newTransaction"));
+    if (newTransaction) {
+      setTransactions((prevTransactions) => [
+        newTransaction,
+        ...prevTransactions,
+      ]);
+      localStorage.removeItem("newTransaction"); // Очистка сохраненной транзакции
+    }
   }, []);
+
   return (
     <Page>
       <div className="content-balance">
@@ -56,7 +88,27 @@ const BalancePage = () => {
 
       <ul className="transactions">
         <li>
-          <Link className="transaction-link" to="../balance/transaction">
+          <Link className="transaction-link" to="/balance/transaction">
+            {transactions.length > 0 && (
+              <div className="transaction">
+                <div className="logo">
+                  <img src="/img/Frame 17.png" alt="Icon" />
+                </div>
+
+                <div className="info">
+                  <div className="user">User</div>
+                  <div className="detail">
+                    <h2>{transactions[0].amount}</h2>
+                    <div>Receipt</div>
+                  </div>
+                </div>
+
+                <div className="count-recep">
+                  <span>-{amount}</span>
+                </div>
+              </div>
+            )}
+
             <div className="transaction">
               <div className="logo">
                 <img src="/img/Frame 17.png" alt="Icon" />

@@ -7,7 +7,7 @@ const initialState = {
   user: null,
 };
 
-const authReducer = (state, action) => {
+const authStateReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
@@ -27,24 +27,24 @@ const authReducer = (state, action) => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [state, dispatch] = useReducer(authStateReducer, initialState);
 
-  // const login = (token, user) => {
-  //   dispatch({ type: "LOGIN", payload: { token, user } });
-  // };
+  const login = (token, user) => {
+    dispatch({ type: "LOGIN", payload: { token, user } });
+  };
 
-  // const logout = () => {
-  //   dispatch({ type: "LOGOUT" });
-  // };
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
 
-  // const authContextData = {
-  //   state,
-  //   login,
-  //   logout,
-  // };
+  const authContextData = {
+    state,
+    login,
+    logout,
+  };
 
   return (
-    <AuthContext.Provider value={{ authState: state, authDispatch: dispatch }}>
+    <AuthContext.Provider value={authContextData}>
       {children}
     </AuthContext.Provider>
   );
@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 
 const useAuth = () => {
   const context = useContext(AuthContext);
+
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }

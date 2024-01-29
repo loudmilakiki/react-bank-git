@@ -16,7 +16,6 @@ const InputPassword = ({
   const [error, setError] = useState("");
 
   const togglePassword = () => {
-    console.log("Toggle password clicked");
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
     setShowPassword((prevShow) => !prevShow);
   };
@@ -48,7 +47,7 @@ const InputPassword = ({
           name={name}
           value={inputValue}
           placeholder={placeholder}
-          autocomplete="new-password"
+          autoComplete="new-password"
         />
         <span
           onClick={togglePassword}
