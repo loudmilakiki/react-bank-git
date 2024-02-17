@@ -2,17 +2,17 @@ import "./index.css";
 import React, { useState } from "react";
 
 const InputPassword = ({
-  name = "",
   label = "",
   type = "text",
   placeholder = "",
-  defaultValue = "",
-  value = "",
-  errorMessage = "",
+  isValid,
+  errorMessage,
+  onChange,
+  value,
 }) => {
   const [inputType, setInputType] = useState(type);
   const [showPassword, setShowPassword] = useState(false);
-  const [inputValue, setInputValue] = useState(defaultValue);
+  const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
   const togglePassword = () => {
@@ -20,9 +20,15 @@ const InputPassword = ({
     setShowPassword((prevShow) => !prevShow);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputValue(value);
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+
+    setInputValue(inputValue); // Добавьте эту строку
+    setError(""); // Сброс ошибки при каждом изменении
+
+    if (onChange) {
+      onChange(inputValue);
+    }
   };
 
   const validatePassword = () => {
@@ -35,18 +41,16 @@ const InputPassword = ({
 
   return (
     <div className=" field--password">
-      <label htmlFor={name} className="field__label"></label>
+      <label htmlFor={label} className="field__label"></label>
 
       <div className="field__wrapper">
         <input
-          onChange={handleChange}
+          onChange={handleInputChange}
           onBlur={validatePassword}
           type={inputType}
-          className="field__input validation"
-          name={name}
-          value={inputValue}
+          className="field__input"
+          value={value}
           placeholder={placeholder}
-          autoComplete="new-password"
         />
         <span
           onClick={togglePassword}

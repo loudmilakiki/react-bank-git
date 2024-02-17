@@ -22,59 +22,45 @@ const RecoveryPage = () => {
   const handleSendCode = async (event) => {
     event.preventDefault();
 
-    if (isEmailValid) {
-      const confirmationCode = Math.floor(1000 + Math.random() * 9000);
-      const userConfirmed = window.confirm(
-        `Your confirmation code is: ${confirmationCode}. Proceed?`
-      );
-    }
-
     const isEmailValid = validateEmail(email);
     setIsValidEmail(isEmailValid);
 
-    if (!isEmailValid) {
+    if (isEmailValid) {
       setErrorMessage("Помилка введених даних");
       return;
     }
 
+    const confirmationCode = Math.floor(1000 + Math.random() * 9000);
+    const userConfirmed = window.confirm(
+      `Your confirmation code is: ${confirmationCode}. Proceed?`
+    );
+
     if (userConfirmed) {
-      navigate(`/recovery-confirm`);
-    } else {
-      console.log("User cancelled the operation");
-    }
+      // if (!email.trim()) {
+      //   console.error("Email cannot be empty");
+      //   return;
+      // }
 
-    // if (!email.trim()) {
-    //   console.error("Email cannot be empty");
-    //   return;
-    // }
+      try {
+        const response = await fetch(`http://localhost:4000/api/recovery`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, confirmationCode }),
+        });
 
-    try {
-      const response = await fetch(`http://localhost:4000/api/recovery`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        console.log("Code sent successfully");
-
-        const userConfirmed = window.confirm(
-          `Your confirmation code is: ${confirmationCode}. Proceed?`
-        );
-
-        if (userConfirmed) {
+        if (response.ok) {
+          console.log("Code sent successfully");
           navigate(`/recovery-confirm`);
         } else {
-          console.log("User cancelled the operation");
+          console.error("Failed to send code:", response.status);
         }
-      } else {
-        // Обработка ошибок, если не удалось отправить код
-        console.error("Failed to send code:", response.status);
+      } catch (error) {
+        console.error("Error during fetch:", error);
       }
-    } catch (error) {
-      console.error("Error during fetch:", error);
+    } else {
+      console.log("User cancelled the operation");
     }
   };
 
@@ -111,7 +97,7 @@ const RecoveryPage = () => {
                 required
               />
               <div className="form__error" style={{ color: "#F23152" }}>
-                {emailError}
+                {errorMessage}
               </div>
             </div>
 

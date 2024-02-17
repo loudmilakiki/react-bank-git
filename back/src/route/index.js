@@ -1,23 +1,30 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const app = express()
 const router = express.Router()
 const port = 3001 // Порт сервера
+const bcrypt = require('bcrypt')
 
-app.use(bodyParser.json())
+let confirmationCode
+
 app.use(cors())
 app.options('*', cors())
 
+const { User } = require('../class/user')
+
+User.create({
+  email: 'test@mail.com',
+  password: 123456789,
+})
+
 const users = []
 
-const signup = (email, password) => {
+const signup = (email, password, confirmPassword) => {
+  // Перевірка, чи вже існує користувач з таким email
   console.log(users)
-
-  const existingUser = users.find(
-    (user) => user.email === email,
-  )
+  const existingUser =
+    users && users.find((user) => user.email === email)
 
   if (existingUser) {
     return {
@@ -26,23 +33,56 @@ const signup = (email, password) => {
     }
   }
 
+  if (password !== confirmPassword) {
+    return {
+      success: false,
+      message:
+        'Пароль та підтвердження паролю не співпадають',
+    }
+  }
+
   const confirmationCode = generateConfirmationCode()
+  console.log('Confirmation Code:', confirmationCode)
+
+  const hashedPassword = bcrypt.hashSync(password, 10)
+
+  // Створення нового користувача
+  const transactions = [
+    {
+      id: 2,
+      type: 'Sending',
+      amount: -30,
+      recipient: 'John Doe',
+      time: '2023-11-17T14:45:00',
+    },
+    {
+      id: 1,
+      type: 'Receipt',
+      amount: 1250,
+      paymentSystem: 'Stripe',
+      time: '2023-11-16T10:30:00',
+    },
+  ]
+
+  // const confirmationCode = generateConfirmationCode()
+  // console.log('Confirmation Code:', confirmationCode)
 
   const newUser = {
     email,
-    password,
-    confirmed: false,
-    confirmationCode,
-    transaction: [],
+    password: hashedPassword,
+    confirm: false,
+    transactions,
     balance: 0,
     notifications: [],
+    confirmationCode,
   }
   users.push(newUser)
+
+  console.log('New user:', newUser)
 
   return {
     success: true,
     message: 'Реєстрація пройшла успішно',
-    confirmationCode,
   }
 }
 
@@ -70,7 +110,6 @@ const signin = (email, password) => {
   return {
     success: true,
     message: 'Вход в систему успешен',
-    user,
   }
 }
 
@@ -117,6 +156,7 @@ const changeEmail = (newEmail, oldEmail, password) => {
   return {
     success: true,
     message: 'Электронная почта изменена успешно',
+    user: user,
   }
 }
 
@@ -157,12 +197,20 @@ const confirmRecovery = (
   password,
   confirmationCode,
 ) => {
+  console.log('Confirm Recovery Data:', {
+    email,
+    password,
+    confirmationCode,
+  })
+  console.log('Users:', users)
+
   const user = users.find(
     (u) =>
       u.email === email &&
-      u.password === password &&
+      bcrypt.compareSync(password, u.password) &&
       u.confirmationCode === confirmationCode,
   )
+  console.log('User found for confirmation:', user)
 
   if (user && !user.confirmed) {
     user.confirmed = true
@@ -204,54 +252,85 @@ const getTransactions = (paymentMethod) => {
   return transaction
 }
 
-// Роут для обработки запросов регистрации
+//Роут для обработки запросов регистрации
 router.post('/api/signup', (req, res) => {
-  const { email, password } = req.body
+  const {
+    email,
+    password,
+    confirmPassword,
+    confirmationCode,
+  } = req.body
+  console.log(req.body)
 
-  res
-    .status(200)
-    .json({ message: 'User registered successfully' })
+  console.log('Existing Users:', users)
+
+  if (
+    !email ||
+    !password ||
+    !confirmPassword ||
+    !confirmationCode
+  ) {
+    return res.status(400).json({
+      message: 'Email, password are required',
+    })
+  }
 
   try {
-    const existingUser = users.find(
-      (user) => user.email === email,
-    )
+    // User.create({ email, password })
 
-    if (existingUser) {
-      return res.status(400).json({
-        message:
-          'Пользователь с таким email уже существует',
-      })
-    }
+    return res.status(200).json({
+      message: 'User registered successfully',
+    })
+    //   const existingUser = users.find(
+    //     (user) => user.email === email,
+    //   )
 
-    const signupResult = signup(email, password)
+    //   if (existingUser) {
+    //     return res.status(400).json({
+    //       message:
+    //         'Пользователь с таким email уже существует',
+    //     })
+    //   }
 
-    if (signupResult.success) {
-      const newUser = {
-        email,
-        password,
-        confirmed: false,
-        transaction: [],
-        balance: 0,
-        notifications: [],
-      }
-      users.push(newUser)
+    //   const signupResult = signup(
+    //     email,
+    //     password,
+    //     confirmPassword,
+    //     confirmationCode,
+    //   )
 
-      return res.status(200).json({
-        message: signupResult.message,
-      })
-    } else {
-      console.log(signupResult.message)
-      return res.status(400).json({
-        message: signupResult.message,
-      })
-    }
-  } catch (e) {
+    //   if (signupResult.success) {
+    //     const newUser = {
+    //       email,
+    //       password,
+    //       confirmed: false,
+    //       transaction: [],
+    //       balance: 0,
+    //       notifications: [],
+    //     }
+    //     users.push(newUser)
+
+    //     return res.json({
+    //       message: signupResult.message,
+    //       redirect: '/signup-confirm',
+    //     })
+
+    //     // return res.status(200).json({
+    //     //   message: signupResult.message,
+    //     // })
+    //   } else {
+    //     console.log(signupResult.message)
+    //     return res.status(400).json({
+    //       message: signupResult.message,
+    //     })
+    //   }
+  } catch (err) {
     return res.status(400).json({
-      message: e.message,
+      message: err.message,
     })
   }
 })
+module.exports = signup
 
 router.post('/api/signin', (req, res) => {
   const { email, password } = req.body
@@ -340,20 +419,33 @@ router.post('/api/change-password', (req, res) => {
   }
 })
 
-ации
 router.post('/api/signup-confirm', (req, res) => {
-  console.log('Request body:', req.body)
-  const { email, password, confirmationCode } = req.body
+  console.log('Request body:', req.body) // Отладочная информация
+
+  const { confirmationCode, email } = req.body
+
+  console.log('Received data:', {
+    confirmationCode,
+  })
+
+  console.log('Confirmation Code:', confirmationCode)
+
+  if (!confirmationCode) {
+    return res.status(400).json({
+      message: "Помилка. Обов'язкові поля відсутні",
+    })
+  }
 
   try {
-    const recoveryConfirmResult = confirmRecovery(
+    const signupConfirm = confirmRecovery(
       email,
-      password,
+      null,
       confirmationCode,
     )
 
-    if (!recoveryConfirmResult) {
+    if (signupConfirm) {
       console.log(users)
+
       return res
         .status(200)
         .json({ message: 'Подтверждение успешно' })
@@ -362,9 +454,10 @@ router.post('/api/signup-confirm', (req, res) => {
         message: 'Користувача з таким емейл не існує',
       })
     }
-  } catch (e) {
+  } catch (err) {
+    console.error('Error during signup confirmation:', err)
     return res.status(400).json({
-      message: e.message,
+      message: err.message,
     })
   }
 })

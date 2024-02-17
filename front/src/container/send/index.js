@@ -130,7 +130,7 @@ const SendPage = () => {
       }
     } catch (error) {
       console.error("Error during JSON processing:", error);
-      и;
+
       if (
         error instanceof TypeError &&
         error.message.includes(

@@ -1,29 +1,10 @@
 .field {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 
         &::placeholder {
             color: #1D1D1F;
-        }
-
-        color: black;
-        transition: border-color 0.3s;
-
-        &:hover {
-            border-color: gray;
-        }
-
-        &:focus {
-            border-color: #775CE5;
-        }
-
-        &--error {
-            border-color: red !important;
-        }
-
-        .field__input {
-            border-color: red;
         }
     }
 
@@ -39,6 +20,28 @@
         border-radius: 10px;
         font-size: 14px;
         width: 100%;
+
+         color: black;
+        transition: border-color 0.3s;
+
+
+         &::placeholder {
+            color: #1D1D1F;
+        }
+
+           &--error {
+            border-color: red !important;
+        }
+             &:focus {
+            border-color: #775CE5;
+        }
+
+         &:hover {
+            border-color: gray;
+        }
+
+       
+
     }
 
     .field__error {

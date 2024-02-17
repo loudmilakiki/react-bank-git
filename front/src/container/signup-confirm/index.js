@@ -3,26 +3,28 @@ import "./index.css";
 import Status from "../../component/status";
 import Back from "../../component/back-button";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import { useAuth } from "../../utils/AuthContext";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+//import { useAuth } from "../../utils/AuthContext";
+//import { useLocation } from "react-router-dom";
 
 const SignupConfirmPage = () => {
-  const { login } = useAuth();
+  const navigate = useNavigate();
   const [confirmationCode, setConfirmationCode] = useState("");
   const [isValidCode, setIsValidCode] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
-  const confirmationCodeFromSignup =
-    (location.state && location.state.confirmationCode) || "";
+  const [email, setEmail] = useState("");
 
-  const confirmAccount = async () => {
+  // Вызовите ваши функции здесь
+
+  const submit = async () => {
+    console.log("Email:", email);
+    console.log("Confirmation Code:", confirmationCode);
     console.log("Attempting to confirm account...");
-    console.log("Data to be sent:", {
-      confirmationCode,
-      confirmationCodeFromSignup,
-    });
+
+    if (!isValidCode) {
+      setErrorMessage("Введено невірний код");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:4000/api/signup-confirm", {
@@ -31,34 +33,19 @@ const SignupConfirmPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          confirmationCode: confirmationCodeFromSignup,
+          email: email,
+          confirmationCode,
         }),
       });
 
       const result = await response.json();
 
-      console.log("Server response:", result);
+      console.log("Ответ сервера:", result);
 
       if (response.ok) {
         if (result.message === "Подтверждение успешно") {
           console.log("Confirmation successful!");
-
           navigate("/balance");
-
-          if (result.updatedUser) {
-            console.log("Updated user:", result.updatedUser);
-            console.log("Updated token:", result.updatedToken);
-
-            login({
-              type: "LOGIN",
-              payload: {
-                user: result.updatedUser,
-                token: result.updatedToken,
-              },
-            });
-          } else {
-            console.log("No updated user information received.");
-          }
         } else {
           console.error("Server error:", result.message);
           setErrorMessage(result.message);
@@ -83,8 +70,10 @@ const SignupConfirmPage = () => {
 
       <div className="content-con">
         <div className="section">
-          <h1 className="title-up">Recover password</h1>
-          <p className="descr">Choose a registration method</p>
+          <h1 className="title-up">Confirm Registration</h1>
+          <p className="descr">
+            Enter the confirmation code sent to your email
+          </p>
         </div>
 
         <div className="action-con">
@@ -92,23 +81,23 @@ const SignupConfirmPage = () => {
             <span>Code</span>
             <input
               className="input-confirm-code"
-              placeholder="code"
+              placeholder="Enter code"
               type="text"
               value={confirmationCode}
               onChange={(e) => setConfirmationCode(e.target.value)}
+              errorMessage="Введено невірний код"
             />
           </div>
 
-          {!isValidCode && (
-            <div className="error-message">
-              <span>{errorMessage}</span>
-            </div>
-          )}
-
           <div className="buttons-con">
-            <button className="button-confirm" onClick={confirmAccount}>
+            <button className="button-confirm" onClick={submit}>
               Confirm
             </button>
+            {!isValidCode && (
+              <div className="error-message">
+                <span>{errorMessage}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

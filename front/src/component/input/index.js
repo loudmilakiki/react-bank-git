@@ -1,4 +1,5 @@
 import "./index.css";
+import React, { useState } from "react";
 
 const Input = ({
   name = "",
@@ -7,24 +8,36 @@ const Input = ({
   placeholder = "",
   isValid,
   errorMessage,
+  onChange,
 }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+
+    setInputValue(value);
+
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
   return (
     <div className="field">
-      <label form="{{name}}" className="field__label">
+      <label htmlFor={name} className="field__label">
         {label}
       </label>
       <input
-        //autoComplete="off"
-        action="signupForm.change"
-        onChange={(e) => console.log(e.target.value)}
+        onChange={handleInputChange}
         type={type}
         className="field__input"
         name={name}
         id={name}
         placeholder={placeholder}
       />
-      <div className="form__error" style={{ color: "#F23152" }}>
-        {isValid ? "" : errorMessage}
+
+      <div className={`form__error ${isValid ? "hidden" : ""}`}>
+        {errorMessage}
       </div>
     </div>
   );

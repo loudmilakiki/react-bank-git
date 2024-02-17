@@ -1,9 +1,5 @@
 class User {
-  static USER = {
-    USER: 1,
-  }
-
-  static #list = []
+  static _list = []
 
   constructor({ email, password }) {
     this.email = email
@@ -12,11 +8,20 @@ class User {
 
   static create(data) {
     const user = new User(data)
+    console.log(user)
+    this._list.push(user)
+    console.log(this._list)
+    return user
+  }
 
-    this.#list.push(user)
+  static getByEmail(email) {
+    return (
+      this._list.find((user) => user.email === email) ||
+      null
+    )
   }
 }
 
-module.export = {
+module.exports = {
   User,
 }

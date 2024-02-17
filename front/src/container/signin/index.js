@@ -1,8 +1,5 @@
 import "./index.css";
 import React, { useState } from "react";
-import Page from "../../component/page";
-import Status from "../../component/status";
-import Back from "../../component/back-button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
@@ -19,7 +16,7 @@ const SigninPage = () => {
   const [redirectToSignupConfirm, setRedirectToSignupConfirm] = useState(false);
 
   const { authState, authDispatch } = useAuth();
-  const { token } = authState;
+  const { token } = authState || {};
   const navigate = useNavigate();
   const { updateUserData } = useAuth();
 
@@ -66,7 +63,7 @@ const SigninPage = () => {
 
     const user = { email, password, confirm: true, token: "your_token_here" };
 
-    if (!user.confirm) {
+    if (!authState.user.confirm) {
       setRedirectToSignupConfirm(true);
     } else {
       // const signinResult = async () => {
@@ -76,7 +73,7 @@ const SigninPage = () => {
         );
         const data = await res.json();
 
-        if (res.ok) {
+        if (res.ok && data.success) {
           // setErrorMessage("");
 
           const token = Math.random().toString(36).substring(2, 16);
@@ -93,6 +90,8 @@ const SigninPage = () => {
           } else {
             setRedirectToSignupConfirm(true);
           }
+        } else {
+          setErrorMessage("Invalid email or password");
         }
       } catch (error) {
         console.error("Error signing in:", error);
@@ -102,10 +101,7 @@ const SigninPage = () => {
   };
 
   return (
-    <Page>
-      <Status />
-      <Back />
-
+    <>
       <div className="content-in">
         <div className="section">
           <h1 className="title-up">Sign in</h1>
@@ -175,7 +171,7 @@ const SigninPage = () => {
         <img src="/img/indicator.png" alt="Indicator" />
       </div>
       {redirectToSignupConfirm && <navigate to="/signup-confirm" />}
-    </Page>
+    </>
   );
 };
 

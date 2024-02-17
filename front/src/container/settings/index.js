@@ -102,7 +102,7 @@ const SettingsPage = () => {
       type: "LOGIN",
       payload: { user: updatedUser, token: token },
     });
-    и;
+
     console.log("Saving email:", email);
   };
 
